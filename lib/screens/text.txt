@@ -1,0 +1,65 @@
+I don't like this implmentation. let us start from scratch.
+the onboarding page will have no appbar, an image in a circular avatar 0.2 * the screenwidth, a question, an inout and a pervious/next buttons.
+there are 4 questions to complete the onboarding:
+1- "What is your cooking skill level?" : input to be a CupertinoPicker with the following options ['Beginner', 'Intermediate', 'Expert']
+2- "How many people do you usually cook for per meal?": input to be a CupertinoPicker with the following options 1 to 20
+3- "Do you have any dietary restrictions?": the input to be a scrollable list each with a checkbox of the following list
+[
+    "Vegetarian",
+    "Vegan",
+    "Gluten-Free",
+    "Dairy-Free",
+    "Nut-Free",
+    "Peanut-Free",
+    "Soy-Free",
+    "Egg-Free",
+    "Shellfish-Free",
+    "Fish-Free",
+    "Pork-Free",
+    "Beef-Free",
+    "Low-Carb",
+    "Low-Sodium",
+    "Low-Sugar",
+    "Paleo",
+    "Keto",
+    "Whole30",
+    "Kosher",
+    "Halal",
+    "FODMAP-Friendly",
+    "Diabetic-Friendly",
+    "Lactose Intolerant",
+    "Histamine Intolerance",
+    "Allium-Free",
+    "Nightshade-Free",
+    "Celiac",
+    "Pescatarian",
+    "No Red Meat"
+]
+4- "Finally, what are your health goals?" - the input to be a scrollable list each with a checkbox of the following list
+[
+    "Weight Loss",
+    "Muscle Gain",
+    "Balanced Diet",
+    "Increased Energy",
+    "Improved Digestion",
+    "Heart Health",
+    "Better Sleep",
+    "Mental Clarity",
+    "Immune Support",
+    "Anti-Inflammatory",
+    "Bone Health",
+    "Healthy Skin",
+    "Blood Sugar Control",
+    "Detoxification",
+    "Athletic Performance",
+    "Mood Enhancement",
+    "Stress Reduction",
+    "Longevity",
+    "Hormone Balance",
+    "Pregnancy Health",
+    "Postpartum Recovery",
+    "Healthy Aging",
+    "Improved Joint Health",
+    "Gut Health",
+    "Kidney Health"
+]   
