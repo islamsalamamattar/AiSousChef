@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RecipeService {
-  final String baseUrl = 'https://homechef.project-moonshine.com/api';
+  final String baseUrl = 'https://project-moonshine.com/api';
 
   Future<List<dynamic>> fetchRecipes(String accessToken) async {
     final url = '$baseUrl/recipes?token=$accessToken';

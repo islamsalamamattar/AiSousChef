@@ -182,13 +182,13 @@ class _RegisterPageState extends State<RegisterPage> {
               },
             ),
             SizedBox(height: 10),
-            PasswordStrengthMeter(password: _passwordController.text),
-            SizedBox(height: 10),
             CupertinoTextField(
               controller: _confirmPasswordController,
               placeholder: 'Confirm Password',
               obscureText: true,
             ),
+            SizedBox(height: 10),
+            PasswordStrengthMeter(password: _passwordController.text),
             SizedBox(height: 20),
             CupertinoButton.filled(
               child: Text('Register'),

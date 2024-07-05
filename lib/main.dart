@@ -69,7 +69,8 @@ class _AiSousChefAppState extends State<AiSousChefApp> {
         '/home': (context) => HomePage(accessToken: _accessToken),
         '/login': (context) => LoginPage(),
         '/landing': (context) => LandingPage(),
-        '/change-password': (context) => ChangePasswordPage(),
+        '/change-password': (context) =>
+            ChangePasswordPage(accessToken: _accessToken),
       },
     );
   }

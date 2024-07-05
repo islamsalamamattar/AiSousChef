@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class HistoryService {
-  final String baseUrl = 'https://homechef.project-moonshine.com/api';
+  final String baseUrl = 'https://project-moonshine.com/api';
 
   Future<List<Map<String, dynamic>>> fetchHistory(String accessToken) async {
     final url = '$baseUrl/chat/history?token=$accessToken';

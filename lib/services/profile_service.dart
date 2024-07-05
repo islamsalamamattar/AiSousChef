@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ProfileService {
-  final String baseUrl = 'https://homechef.project-moonshine.com/api';
+  final String baseUrl = 'https://project-moonshine.com/api';
 
-  Future<Map<String, dynamic>> fetchProfile(String accessToken) async {
+  Future<Map<String, dynamic>> fetchProfile(String? accessToken) async {
     final url = '$baseUrl/profile?token=$accessToken';
     final headers = {
       'accept': 'application/json',

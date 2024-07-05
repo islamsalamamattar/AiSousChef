@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RecipeCreateService {
-  final String baseUrl = 'https://homechef.project-moonshine.com/api';
+  final String baseUrl = 'https://project-moonshine.com/api';
 
   Future<Map<String, dynamic>> createRecipe(
       String accessToken, String interactionId) async {

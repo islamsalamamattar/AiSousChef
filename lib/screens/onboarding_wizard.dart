@@ -28,11 +28,11 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
   ];
 
   final List<String> _skillLevels = ['Beginner', 'Intermediate', 'Expert'];
-  int _selectedSkillLevel = 0;
+  int _selectedSkillLevel = 1;
 
   final List<int> _peopleCount =
       List<int>.generate(20, (int index) => index + 1);
-  int _selectedPeopleCount = 0;
+  int _selectedPeopleCount = 3;
 
   bool _unitWeightGrams = true;
   bool _unitLengthMeters = true;
@@ -229,7 +229,6 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //Text("Weight"),
             CupertinoSwitch(
@@ -244,7 +243,6 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //Text("Length"),
             CupertinoSwitch(
@@ -259,7 +257,6 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
           ],
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //Text("Temp"),
             CupertinoSwitch(
@@ -408,8 +405,18 @@ class _OnboardingWizardState extends State<OnboardingWizard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CupertinoButton(
-                child: Text('Previous'),
-                onPressed: _currentStep > 0 ? _previousStep : null,
+                child: Text(_currentStep > 0 ? 'Previous' : 'Skip'),
+                onPressed: _currentStep > 0
+                    ? _previousStep
+                    : () {
+                        Navigator.pushReplacement(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) =>
+                                HomePage(accessToken: widget.accessToken),
+                          ),
+                        );
+                      },
               ),
               CupertinoButton.filled(
                 child: Text(

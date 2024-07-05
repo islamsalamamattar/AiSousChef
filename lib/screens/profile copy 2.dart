@@ -1,13 +1,12 @@
+// lib/screens/profile.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'change_password.dart'; // Import the new screen
 import '../services/profile_service.dart';
 import '../services/auth_service.dart';
-import 'change_password.dart';
-import 'change_info.dart';
-import 'onboarding_wizard.dart';
 
 class ProfilePage extends StatelessWidget {
-  final String? accessToken;
+  final String accessToken;
   final authService = AuthService();
 
   ProfilePage({required this.accessToken});
@@ -56,79 +55,61 @@ class ProfilePage extends StatelessWidget {
         middle: Text('Profile'),
       ),
       child: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.all(16.0),
-          children: [
-            _buildSectionTile(
-              context,
-              'User Data',
-              _buildProfileInfo(context, profile),
-              () {},
-              profile,
-            ),
-            _buildDietaryProfile(context, profile),
-            SizedBox(height: 16),
-            _buildLogoutButton(context),
-          ],
-        ),
-      ),
+          child: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: [
+          _buildProfileInfo(profile),
+          _buildDietaryProfile(profile),
+          _buildChangePasswordButton(context),
+          SizedBox(height: 16),
+          _buildLogoutButton(context),
+        ],
+      )),
     );
   }
 
-  Widget _buildProfileInfo(BuildContext context, Map<String, dynamic> profile) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildInfoTile('Username', profile['username']),
-        _buildInfoTile('First Name', profile['firstName']),
-        _buildInfoTile('Last Name', profile['lastName']),
-        _buildInfoTile('Email', profile['email']),
-        SizedBox(height: 16),
-        SizedBox(
-          width: double.infinity,
-          child: _buildChangePasswordButton(context),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDietaryProfile(
-      BuildContext context, Map<String, dynamic> profile) {
-    return _buildInfoTileWithEditButton(
-      context: context,
-      title: 'Dietary Profile',
-      info: profile['dietary_profile'] ?? 'Not provided',
-    );
-  }
-
-  Widget _buildInfoTileWithEditButton({
-    required BuildContext context,
-    required String title,
-    required String info,
-  }) {
-    return Stack(
-      children: [
-        _buildInfoTile(title, info),
-        Positioned(
-          top: 4,
-          right: 4,
-          child: CupertinoButton(
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              CupertinoIcons.create,
-              color: CupertinoColors.systemGrey4,
-            ),
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pushReplacement(
-                CupertinoPageRoute(
-                  builder: (context) =>
-                      OnboardingWizard(accessToken: accessToken!),
-                ),
-              );
-            },
+  Widget _buildProfileInfo(Map<String, dynamic> profile) {
+    return Stack(children: [
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        _buildInfoTile('User Info',
+            'Username:  ${profile['username']}\n\nName:  ${profile['firstName']} ${profile['lastName']}\n\nEmail: ${profile['email']}'),
+      ]),
+      Positioned(
+        top: 8,
+        right: 8,
+        child: CupertinoButton(
+          padding: EdgeInsets.all(8),
+          child: Icon(
+            CupertinoIcons.pencil,
+            color: CupertinoColors.activeBlue,
           ),
+          onPressed: () {
+            // Navigate to the edit profile page
+          },
         ),
-      ],
+      )
+    ]);
+  }
+
+  Widget _buildDietaryProfile(Map<String, dynamic> profile) {
+    return Stack(children: [
+      _buildInfoTile(
+          'Dietry Profile', profile['dietary_profile'] ?? 'Not provided'),
+      Positioned(
+        top: 4,
+        right: 4,
+        child: CupertinoButton(
+          padding: EdgeInsets.all(8),
+          child: Icon(
+            CupertinoIcons.home,
+            color: CupertinoColors.systemGrey,
+          ),
+          onPressed: () {
+            // Navigate to the edit profile page
+          },
+        ),
+      )
+    ]
     );
   }
 
@@ -140,75 +121,9 @@ class ProfilePage extends StatelessWidget {
       ),
       subtitle: Text(
         info,
-        style: TextStyle(color: CupertinoColors.systemGrey4),
+        style: TextStyle(color: CupertinoColors.white),
       ),
       backgroundColor: CupertinoColors.black,
-    );
-  }
-
-  Widget _buildSectionTile(
-    BuildContext context,
-    String title,
-    Widget content,
-    VoidCallback onPressed,
-    Map<String, dynamic> profile,
-  ) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: CupertinoColors.black,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: CupertinoColors.systemGrey4,
-                  offset: Offset(0.0, 2.0),
-                  blurRadius: 4.0,
-                ),
-              ],
-            ),
-            padding: EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                      fontSize: 18, color: CupertinoColors.systemGrey),
-                ),
-                SizedBox(height: 8),
-                content,
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: 4,
-          right: 4,
-          child: CupertinoButton(
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              CupertinoIcons.create,
-              color: CupertinoColors.systemGrey4,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                CupertinoPageRoute(
-                  builder: (context) => InfoPage(
-                    accessToken: accessToken!,
-                    username: profile['username'],
-                    email: profile['email'],
-                    firstName: profile['firstName'],
-                    lastName: profile['lastName'],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
 
@@ -218,7 +133,7 @@ class ProfilePage extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).push(
           CupertinoPageRoute(
-            builder: (context) => ChangePasswordPage(accessToken: accessToken),
+            builder: (context) => ChangePasswordPage(),
           ),
         );
       },
@@ -226,15 +141,12 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildLogoutButton(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: CupertinoButton(
-        color: CupertinoColors.destructiveRed,
-        child: Text('Logout'),
-        onPressed: () async {
-          await _showLogoutConfirmationDialog(context);
-        },
-      ),
+    return CupertinoButton(
+      color: CupertinoColors.destructiveRed,
+      child: Text('Logout'),
+      onPressed: () async {
+        await _showLogoutConfirmationDialog(context);
+      },
     );
   }
 
@@ -256,9 +168,9 @@ class ProfilePage extends StatelessWidget {
               child: Text('Logout'),
               isDestructiveAction: true,
               onPressed: () async {
+                Navigator.of(context).pop();
                 await authService.logout(accessToken);
                 await FlutterSecureStorage().delete(key: 'refresh_token');
-                Navigator.of(context).pop();
                 Navigator.of(context, rootNavigator: true)
                     .pushReplacementNamed('/landing');
               },

@@ -59,9 +59,9 @@ class ProfilePage extends StatelessWidget {
           padding: EdgeInsets.all(16.0),
           children: [
             _buildSectionTile('User Data', _buildProfileInfo(profile)),
-            _buildSectionTile('Dietary Profile', _buildDietaryProfile(profile)),
+            //_buildDietaryProfile(profile),
             _buildChangePasswordButton(context),
-            SizedBox(height: 30),
+            SizedBox(height: 16),
             _buildLogoutButton(context),
           ],
         ),
@@ -82,11 +82,14 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
         Positioned(
-          top: 0,
-          right: 0,
+          top: 8,
+          right: 8,
           child: CupertinoButton(
             padding: EdgeInsets.all(8),
-            child: Text('Edit', style: TextStyle(color: CupertinoColors.activeBlue)),
+            child: Icon(
+              CupertinoIcons.pencil,
+              color: CupertinoColors.activeBlue,
+            ),
             onPressed: () {
               // Navigate to the edit profile page
             },
@@ -97,7 +100,25 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget _buildDietaryProfile(Map<String, dynamic> profile) {
-    return _buildInfoTile('Dietary Profile', profile['dietary_profile'] ?? 'Not provided');
+    return Stack(children: [
+      _buildInfoTile(
+          'Dietry Profile', profile['dietary_profile'] ?? 'Not provided'),
+      Positioned(
+        top: 4,
+        right: 4,
+        child: CupertinoButton(
+          padding: EdgeInsets.all(8),
+          child: Icon(
+            CupertinoIcons.home,
+            color: CupertinoColors.systemGrey,
+          ),
+          onPressed: () {
+            // Navigate to the edit profile page
+          },
+        ),
+      )
+    ]
+    );
   }
 
   Widget _buildInfoTile(String title, String info) {

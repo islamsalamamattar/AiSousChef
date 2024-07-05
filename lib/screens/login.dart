@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
 
       // Fetch user profile
       final profile = await _profileService.fetchProfile(accessToken);
-      final hasCompletedOnboarding = profile['Onboraded'] == true;
+      final hasCompletedOnboarding = profile['Onboarded'] == true;
 
       if (hasCompletedOnboarding) {
         // Navigate to HomeScreen if onboarding is complete
