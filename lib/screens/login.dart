@@ -1,11 +1,13 @@
-// screens/login.dart
+// lib/screens/login.dart
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../services/auth_service.dart';
 import '../services/profile_service.dart';
 import 'home.dart';
 import 'welcome.dart';
-import 'forgot_password.dart'; // Add this import
+import 'forgot_password.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -25,8 +27,7 @@ class _LoginPageState extends State<LoginPage> {
     final password = _passwordController.text.trim();
 
     try {
-      final tokens =
-          await _authService.login(username: username, password: password);
+      final tokens = await _authService.login(username: username, password: password);
       final accessToken = tokens['access_token'];
       final refreshToken = tokens['refresh_token'];
 
@@ -64,12 +65,18 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     } catch (e) {
+      String errorMessage = 'An error occurred. Please try again.';
+      if (e is http.Response) {
+        if (e.statusCode == 400) {
+          errorMessage = 'Incorrect username or password';
+        }
+      }
       // Handle login error
       showCupertinoDialog(
         context: context,
         builder: (context) => CupertinoAlertDialog(
           title: Text('Login Failed'),
-          content: Text(e.toString()),
+          content: Text(errorMessage),
           actions: [
             CupertinoDialogAction(
               child: Text('OK'),
